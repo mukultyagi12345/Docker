@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  wordpress:
+    image: wordpress:latest
+    container_name: docker_wp
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: docker_wp
+      WORDPRESS_DB_PASSWORD: docker_wp
+      WORDPRESS_DB_NAME: docker_wp
+    volumes:
+      - ./wordpress:/var/www/html  # Correct local path to store WordPress files
+
+  db:
+    image: mysql:5.7
+    container_name: docker_wp_db
+    environment:
+      MYSQL_ROOT_PASSWORD: somewordpress
+      MYSQL_DATABASE: docker_wp
+      MYSQL_USER: docker_wp
+      MYSQL_PASSWORD: docker_wp
+    volumes:
+      - ./mysql:/var/lib/mysql  # Correct local path to store MySQL data
+
+volumes:
+  wordpress_data:
+  db_data:
